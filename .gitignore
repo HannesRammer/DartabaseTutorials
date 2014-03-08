@@ -1,0 +1,16 @@
+
+#INTELJ
+.idea/
+
+
+
+#Dart
+
+
+#DartabaseTutorials
+
+packages/
+pubspec.lock
+.settings/
+
+
