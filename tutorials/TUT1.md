@@ -3,7 +3,8 @@
 <dl>
   <dd>
 This tutorial will show how to connect your dart appplication, server and client side, to a PostgreSQL or MySQL database.
-via [Dartabase Migration](http://pub.dartlang.org/packages/dartabase_migration)   and [Dartabase Model](http://pub.dartlang.org/packages/dartabase_model)
+<br/>
+using <a href="http://pub.dartlang.org/packages/dartabase_migration">Dartabase Migration</a> and <a href="http://pub.dartlang.org/packages/dartabase_model">Dartabase Model</a>   
   </dd>
 </dl>
 
@@ -13,13 +14,15 @@ via [Dartabase Migration](http://pub.dartlang.org/packages/dartabase_migration) 
   <dd>
 Though not needed, it might be usefull to bring some understanding of polymer elements and server client communication into this tutorial.
 </br>
-If you want to know more about server client communication I can recommend you 
+If you want to know more about:
 </p>
-[JSON WEB SERVICES](https://www.dartlang.org/articles/json-web-service/) by Chris Buckett
+server client communication I can recommend you <a href="https://www.dartlang.org/articles/json-web-service/">JSON WEB SERVICES</a> by Chris Buckett
 </p>
-for more information on Polymer please read [POLYMER DART](https://www.dartlang.org/polymer-dart/)
+for more information on Polymer please read 
+<a href="https://www.dartlang.org/polymer-dart/">POLYMER DART</a>
 </p>
-and for nice Polymer examples check out [POLYMER DART EXAMPLES](https://github.com/sethladd/dart-polymer-dart-examples) by Seth Ladd
+and for nice Polymer examples check out 
+<a href="https://github.com/sethladd/dart-polymer-dart-examples">POLYMER DART EXAMPLES</a> by Seth Ladd
   </dd>
 </dl>
 
@@ -27,9 +30,11 @@ and for nice Polymer examples check out [POLYMER DART EXAMPLES](https://github.c
 
 <dl>
   <dd>
-1. Download [Dartabase Tutorials](https://github.com/HannesRammer/DartabaseTutorials) from git and open it's root folder in the Dart Editor via *Open Existing Folder*
+1. Download 
+<a href="https://github.com/HannesRammer/DartabaseTutorials">Dartabase Tutorials</a> from git and open it's root folder in the Dart Editor via *Open Existing Folder*
 </p>
-2. Download latest stand alone version of [Dartabase Migration](http://pub.dartlang.org/packages/dartabase_migration#versions) from pub, extract the zip somewhere to your drive and open the root (lets call it dartabase_migration) folder of the extracted content via "Open Existing Folder"
+2. Download latest stand alone version of 
+<a href="http://pub.dartlang.org/packages/dartabase_migration#versions">Dartabase Migration</a> from pub, extract the zip somewhere to your drive and open the root (lets call it dartabase_migration) folder of the extracted content via "Open Existing Folder"
 </p>
 3. Run 'Pub Get' on dartabase_migration/pubspec.yaml
   </dd>
@@ -42,43 +47,51 @@ and for nice Polymer examples check out [POLYMER DART EXAMPLES](https://github.c
 Migration is a tool to build database table and column structures for your MySQL or PostgreSQL database using json files. 
 </p>
 Before we can use its features, we have to initiate migration once for each project we want to use it with.
-  
-  1.Execute "dartabase_migration/bin/dbInit.dart" to establish a connection 
-    between dartabase_migration and your project. 
 
-  2.Follow the instructions see inside the dbInit.dart output window
-  
-    *insert a project name and hit enter
-      (lets use 'todo' without ')
-    *insert absolute path to the project root folder 
-      (on my machine its 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ') 
-
-    It should look like this
-      ![instructions](https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB.PNG)
+ 1. Execute "dartabase_migration/bin/dbInit.dart"
     
-    Once you hit enter, migration should created the files and folders listed below 
-    and the output dialog should look like this
-      ![script execution](https://github.com/HannesRammer/DartabaseTutorials/blob/master/tutorials/img/postInitDB.PNG)
+  this process will establish a connection between dartabase_migration and your project. 
 
-      *dartabase_migration/bin/projectsMapping.json       
-        -maps project names to absolute project paths for interaction between tool and programm
-      *$yourProjectName/db/
-        -folder used by dartabase tools
-      *$yourProjectName/db/config.json          
-        -the dartabase config file is a simple json structure used to set IP/PORT/DBType for DB connection
-      *$yourProjectName/db/schema.json          
-        -schema is the current migrated version of the database structure as JSON used by dartabase tools
-      *$yourProjectName/db/schemaVersion.json   
-        -safes name of latest migrated version file
-      *$yourProjectName/db/migrations           
-        -you have to keep the migration files inside this folder!
+ 2. Follow the instructions see from the dbInit.dart output window
+  
+    1. insert a project name and hit enter (lets use 'todo' without ')
+    
+    2. insert absolute path to the project root folder (on my machine its 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ') 
 
-  3.Open the *$yourProjectName/db/config.json file and adapt the file with your existing empty database data
+    Your output should look like this
+      <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB.PNG" >
 
-    In this tutorial we use a PostgeSQL database called 'todoList' 
-    with user 'postgres' password '1234' running on localhost:5432
+ Once you hit enter, dartabase_migration should created the files and folders listed below
+ the output dialog should look like this
+  
+  <img src="https://github.com/HannesRammer/DartabaseTutorials/blob/master/tutorials/img/postInitDB.PNG" >
+ 
+ <b>dartabase_migration/bin/projectsMapping.json</b>         
+  - maps project names to absolute project paths for interaction between tool and programm <br/><br/>
 
-    the config file should look like this now
+ <b>yourProjectName/db/</b>
+  - folder used by dartabase tools <br/><br/>
+ 
+ <b>yourProjectName/db/config.json</b>          
+  - the dartabase config file is a simple json structure used to set IP/PORT/DBType for DB connection <br/><br/>
+      
+ <b>yourProjectName/db/schema.json</b>
+  - schema is the current migrated version of the database structure as JSON used by dartabase tools <br/><br/>
+      
+ <b>yourProjectName/db/schemaVersion.json</b>
+  - safes name of latest migrated version file <br/><br/>
+  
+ <b>yourProjectName/db/migrations</b>
+  - you have to keep the migration files inside this folder! <br/><br/>
+
+ 3. Open the <b>yourProjectName/db/config.json</b> file and adapt the file with your existing empty database config data
+
+  In this tutorial we use a PostgeSQL database <b>called</b> 'todoList' 
+  <br/>
+  with <b>user</b> 'postgres', <b>password</b> '1234' <b>running on</b> 'localhost:5432'
+  <br/><br/>
+  the config file should look like this now
+  <pre>
     --------config.json---------
     {
       "adapter": "PGSQL",
@@ -88,8 +101,7 @@ Before we can use its features, we have to initiate migration once for each proj
       "host": "localhost",
       "port": "5432"
     }
-    ----------------------------
-
+  </pre>
     if you prefer to use MySQL use "MySQL" as the adapter instead
 
    We are ready to create our first database migration! yeah
