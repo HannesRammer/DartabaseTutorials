@@ -1,4 +1,6 @@
+*************************************************
 ## Tutorial1: database connected dart application
+-------------------------------------------------
  
 <dl>
   <dd>
@@ -54,9 +56,8 @@ Before we can use its features, we have to initiate migration once for each proj
 
  2. Follow the instructions see from the dbInit.dart output window
   
-    1. insert a project name and hit enter (lets use 'todo' without ')
-    
-    2. insert absolute path to the project root folder (on my machine its 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ') 
+  1. insert a project name and hit enter (lets use 'todo' without ')
+  2. insert absolute path to the project root folder (on my machine its 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ') 
 
     Your output should look like this
       <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB.PNG" >
@@ -64,7 +65,7 @@ Before we can use its features, we have to initiate migration once for each proj
  Once you hit enter, dartabase_migration should created the files and folders listed below
  the output dialog should look like this
   
-  <img src="https://github.com/HannesRammer/DartabaseTutorials/blob/master/tutorials/img/postInitDB.PNG" >
+  <img src="https://raw.githubusercontent.com/HannesRammer/DartabaseTutorials/master/tutorials/img/postInitDB.PNG" >
  
  <b>dartabase_migration/bin/projectsMapping.json</b>         
   - maps project names to absolute project paths for interaction between tool and programm <br/><br/>
@@ -102,129 +103,111 @@ Before we can use its features, we have to initiate migration once for each proj
       "port": "5432"
     }
   </pre>
-    if you prefer to use MySQL use "MySQL" as the adapter instead
+    <b>if you prefer to use MySQL use "MySQL" as the adapter instead</b>
 
    We are ready to create our first database migration! yeah
+<br/>
 
-*******************************************************************************************
-HOW TO CREATE MIGRATIONS
-------------------------
-  
-Either
-  
-1a.execute dartabase_migration/bin/createMigration.dart and follow the instructions
-  
-  *enter project name
-  *enter migration name eg. "create_table_user"
-  
-  it will create a dummy migration inside
-  
-  "$yourProjectName/db/migrations/YYYYMMTTHHMMSS_create_table_user" 
-  
-or
-  
-1b.Create a migration json file "timestamp_action.json" 
+###HOW TO CREATE MIGRATIONS
 
-    inside "$yourProjectName/db/migrations"
+<br/>
+ 1. Create a migration json file "timestamp_action.json" inside <b>"yourProjectName/db/migrations" </b>
+  <br/>
+  timestamp format is <b>YYYYMMDDHHMMSS </b>
 
-    eg. "$yourProjectName/db/migrations/20130709134700_create_table_user.json"
+  eg. <b>"yourProjectName/db/migrations/20130709134700_create_table_user.json"</b>
+ 
+ 2. inside your migration file you have a fixed structure!
 
-2.inside your migration file you have a fixed structure!
+  a JSON object with a key "UP" and a json object value
 
-    a JSON object with a key "UP" and a json object value
+  to use migrations you can specify the keys/actions below inside the "UP" value
 
-    to use migrations you can specify the keys/actions below inside the "UP" value
-
-**createTable**
+ **createTable**
     
-    "createTable" key takes a json object as value
+  - takes a json object as value
+ 
+          keys : non_existent_table_names (lower_case)
+          values : JSON object with
+                     keys : non_existent_column_names (lower_case)
+                     values : DARTABASETYPE (String)
+                              or 
+                              JSON object with
+                                keys: column options 
+                                values: column option values 
 
-        keys    : non_existent_table_names (lower_case)
-        values  : json object
-                    keys    : non_existent_column_names (lower_case)
-                    values  : DARTABASETYPE
-                          or
-                          json object
-                          keys: column options 
-                          values: column option values 
-
-    type only
-    "createTable": {
-      "new_table_name_one": {
-        "new_column_name": "DATATYPE"
-        }
-      }
-      
-        or with options          
-        "createTable": {           
-            "new_table_name_one": {        
-                "new_column_name": {          
-                  'type':"DATATYPE",      
-                    'default':"1234"    
-                }                
-            }                
-        }
-
-**createColumn**
+    - with Dartabase Type
     
-    "createColumn" key takes a json object as value
-
-        keys    : existing_table_names (lower_case)
-        values  : json object
-                    keys    : non_existent_column_names (lower_case)
-                    values  : DARTABASETYPE
-                          or
-                          json object
-                          keys: column options 
-                          values: column option values 
-
-    type only
-    "createColumn": {
-      "existing_table_name_one": {
-        "new_column_name": "DATATYPE"
-        }
-      }
-        
-        or with options
-        "createColumn": {          
-            "existing_table_name_one": {    
-                "new_column_name": {         
-                  'type':"DATATYPE"      
-                }              
+          "createTable": {
+            "new_table_name_one": {
+              "new_column_name": "DATATYPE"
             }
-        }
+          }
+      
+    - or with JSON object          
 
-**removeColumn**
+          "createTable": {           
+            "new_table_name_one": {        
+              "new_column_name": {          
+                'type':"DATATYPE",      
+                'default':"1234"    
+              }                
+            }                
+          }
+
+ **createColumn**
     
-    "removeColumn" key takes a json object as value
+   - takes a json object as value
 
-        keys    : existing_table_names (lower_case)
-        values  : array[existing_column_names] (lower_case)
+          keys : existing_table_names (lower_case)
+          values : JSON object with
+                     keys : non_existent_column_names (lower_case)
+                     values : DARTABASETYPE
+                              or
+                              JSON object
+                                keys: column options 
+                                values: column option values 
 
-        eg.
-        "removeColumn": {
+    - type only
+    
+          "createColumn": {
+            "existing_table_name_one": {
+              "new_column_name": "DATATYPE"
+            }
+          }
+    
+ **removeColumn**
+    
+   - takes a json object as value
+
+          keys : existing_table_names (lower_case)
+          values : array[existing_column_names] (lower_case)
+
+          eg.
+          "removeColumn": {
             "existing_table_name_one": ["existing_column_name_one"]
-        }
+          }
 
-**removeTable**
+ **removeTable**
     
-    "removeTable" key takes array of existing_table_names
+   - takes array of existing_table_names
+          value  : array[existing_table_name_one,existing_table_name_two] 
 
-        eg.
-        "removeTable": ["existing_table_name_one"] (lower_case)
-        
-**createRelation**
+          eg.
+          "removeTable": ["existing_table_name_one"] (lower_case)
+
+ **createRelation**
     
-    "createRelation" key takes an array of arrays with two existing table names as value
+   - takes an array of arrays with two existing table names as value
 
-        value  : array[array[existing_table_name_one,existing_table_name_two]] 
+          value  : array[array[existing_table_name_one,existing_table_name_two]] 
 
-        eg.
-        "createRelation": [
-          ["existing_table_name_one","existing_table_name_two"]
-      ]
+          eg.
+          "createRelation": [
+            ["existing_table_name_one","existing_table_name_two"]
+          ]
         
-**removeRelation**
+ **removeRelation**
     
     "removeRelation" key takes an array of arrays with two existing table names as value
 
@@ -235,30 +218,27 @@ or
           ["existing_table_name_one","existing_table_name_two"]
       ]
       
-A simple migration could look like
+ For the tutorial our migration looks like this
 
-    ----------20130709134700_create_table_user.json--------------
-    {
-        "UP": {
+    ----------20130623043400_create_item.json--------------
+    
+        {
+          "UP": {
             "createTable": {
-                "account": {
-                    "name": "VARCHAR"
-                },
-                "picture": {
-                    "file_name": "VARCHAR"
-                }
-            },
-            "createRelation": [
-              ["picture","account"]
+              "item": {
+                "text": "VARCHAR",
+                "done": {"type":"BOOLEAN","default":"0"}
+              }
+            }
+          },
+          "DOWN": {
+            "removeTable": [
+              "item"
             ]
-        },
-        "DOWN": {
-          "removeRelation": [
-              ["picture","account"]
-            ],
-            "removeTable": ["account","picture"]
+          }
         }
-    }
+
+now run //TODO continue tutorial ++++
 
 createTable creates a table named  
 "account" with column "name" and datatype "variable length of characters"
