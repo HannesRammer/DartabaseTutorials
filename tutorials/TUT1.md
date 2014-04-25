@@ -46,7 +46,7 @@ and for nice Polymer examples check out
 
 <dl>
   <dd>
-Migration is a tool to build database table and column structures for your MySQL or PostgreSQL database using json files. 
+Migration is a tool to build version controlled database table and column structures for your MySQL or PostgreSQL database using json files. 
 </p>
 Before we can use its features, we have to initiate migration once for each project we want to use it with.
 
@@ -57,7 +57,7 @@ Before we can use its features, we have to initiate migration once for each proj
  2. Follow the instructions see from the dbInit.dart output window
   
   1. insert a project name and hit enter (lets use 'todo' without ')
-  2. insert absolute path to the project root folder (on my machine its 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ') 
+  2. insert absolute path to your project root folder (on my machine its and for this example I use 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ') 
 
     Your output should look like this
       <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB.PNG" >
@@ -70,22 +70,22 @@ Before we can use its features, we have to initiate migration once for each proj
  <b>dartabase_migration/bin/projectsMapping.json</b>         
   - maps project names to absolute project paths for interaction between tool and programm <br/><br/>
 
- <b>yourProjectName/db/</b>
+ <b>PreTutorialMixApp/db/</b>
   - folder used by dartabase tools <br/><br/>
  
- <b>yourProjectName/db/config.json</b>          
-  - the dartabase config file is a simple json structure used to set IP/PORT/DBType for DB connection <br/><br/>
+ <b>PreTutorialMixApp/db/config.json</b>          
+  - the config file is used to set IP/PORT/DBType for DB connection <br/><br/>
       
- <b>yourProjectName/db/schema.json</b>
+ <b>PreTutorialMixApp/db/schema.json</b>
   - schema is the current migrated version of the database structure as JSON used by dartabase tools <br/><br/>
       
- <b>yourProjectName/db/schemaVersion.json</b>
+ <b>PreTutorialMixApp/db/schemaVersion.json</b>
   - safes name of latest migrated version file <br/><br/>
   
- <b>yourProjectName/db/migrations</b>
+ <b>PreTutorialMixApp/db/migrations</b>
   - you have to keep the migration files inside this folder! <br/><br/>
 
- 3. Open the <b>yourProjectName/db/config.json</b> file and adapt the file with your existing empty database config data
+ 3. Open the <b>PreTutorialMixApp/db/config.json</b> file and adapt the file with your existing empty database config data
 
   In this tutorial we use a PostgeSQL database <b>called</b> 'todoList' 
   <br/>
@@ -109,116 +109,55 @@ Before we can use its features, we have to initiate migration once for each proj
 <br/>
 
 ###HOW TO CREATE MIGRATIONS
-
+ To create a database structure, we can now create simple mirgation files!
 <br/>
- 1. Create a migration json file "timestamp_action.json" inside <b>"yourProjectName/db/migrations" </b>
+ 1. Create a json file "timestamp_action.json" inside <b>"PreTutorialMixApp/db/migrations" </b>
   <br/>
   timestamp format is <b>YYYYMMDDHHMMSS </b>
 
-  eg. <b>"yourProjectName/db/migrations/20130709134700_create_table_user.json"</b>
+  eg. <b>"PreTutorialMixApp/db/migrations/20130623043400_create_item.json"</b>
  
- 2. inside your migration file you have a fixed structure!
+ 2. inside your migration file you have to follow a fixed structure!
 
-  a JSON object with a key "UP" and a json object value
+  you can execute actions using a JSON object using a key "UP" or "DOWN" key that each take a json object as a value
+  DOWN is manly used to revert actions taken inside the UP
 
-  to use migrations you can specify the keys/actions below inside the "UP" value
+  Some of the actions you can specify are
 
  **createTable**
     
-  - takes a json object as value
- 
-          keys : non_existent_table_names (lower_case)
-          values : JSON object with
-                     keys : non_existent_column_names (lower_case)
-                     values : DARTABASETYPE (String)
-                              or 
-                              JSON object with
-                                keys: column options 
-                                values: column option values 
-
-    - with Dartabase Type
-    
           "createTable": {
             "new_table_name_one": {
-              "new_column_name": "DATATYPE"
+              "new_column_name_one": "DATATYPE",
+              "new_column_name_last": "DATATYPE"
+            }
+            "new_table_name_two": {
+            ...
             }
           }
       
-    - or with JSON object          
-
-          "createTable": {           
-            "new_table_name_one": {        
-              "new_column_name": {          
-                'type':"DATATYPE",      
-                'default':"1234"    
-              }                
-            }                
-          }
-
  **createColumn**
-    
-   - takes a json object as value
-
-          keys : existing_table_names (lower_case)
-          values : JSON object with
-                     keys : non_existent_column_names (lower_case)
-                     values : DARTABASETYPE
-                              or
-                              JSON object
-                                keys: column options 
-                                values: column option values 
-
-    - type only
     
           "createColumn": {
             "existing_table_name_one": {
-              "new_column_name": "DATATYPE"
+              "new_column_name_one": "DATATYPE",
+              "new_column_name_last": "DATATYPE"
+            },
+            "existing_table_name_two": {
+            ...
             }
           }
-    
  **removeColumn**
     
-   - takes a json object as value
-
-          keys : existing_table_names (lower_case)
-          values : array[existing_column_names] (lower_case)
-
-          eg.
           "removeColumn": {
             "existing_table_name_one": ["existing_column_name_one"]
           }
-
  **removeTable**
-    
-   - takes array of existing_table_names
-          value  : array[existing_table_name_one,existing_table_name_two] 
-
-          eg.
+ 
           "removeTable": ["existing_table_name_one"] (lower_case)
-
- **createRelation**
-    
-   - takes an array of arrays with two existing table names as value
-
-          value  : array[array[existing_table_name_one,existing_table_name_two]] 
-
-          eg.
-          "createRelation": [
-            ["existing_table_name_one","existing_table_name_two"]
-          ]
-        
- **removeRelation**
-    
-    "removeRelation" key takes an array of arrays with two existing table names as value
-
-        value  : array[array[existing_table_name_one,existing_table_name_two]] 
-
-        eg.
-        "removeRelation": [
-          ["existing_table_name_one","existing_table_name_two"]
-      ]
-      
- For the tutorial our migration looks like this
+ For the todoList we want to create a list item with a text that stored the task and a done field, for once the task is done.
+ 
+ the migration file should look like this
 
     ----------20130623043400_create_item.json--------------
     
@@ -238,190 +177,44 @@ Before we can use its features, we have to initiate migration once for each proj
           }
         }
 
-now run //TODO continue tutorial ++++
+we have a createTable action that creates a table named "item" with two columns, "text" as a string and "done" as a boolean with default value false
 
-createTable creates a table named  
-"account" with column "name" and datatype "variable length of characters"
-"picture" with column "name" and datatype "variable length of characters"
-
-createRelation creates a table named
-"account_2_picture" with columns "account_id" and "picture_id"
-
+inside the DOWN action we simply add the reverse action. Later we can decide if we want to migrate UP or DOWN making it possible to revert database changes
+ 
+ <b>removing columns or tables from the database will obviously delete the data! so be carefull</b>
 
 *******************************************************************************************
-COLUMN ID
----------
-
-The 'id' column will be generated by 'Dartabase Migration' for every table 
-as primary key. 
-  
-  Dont add 'id' in any of the migration files.
-  
-This is to let 'Dartabase Model' decide when to create or update an Object
-on save() - see [Dartabase Model](http://pub.dartlang.org/packages/dartabase_model)     
-       
-*******************************************************************************************
-COLUMN CREATED/UPDATED
-----------------------
-
-For each table a created_at and updated_at column will be generated automatically.
-    
-    created_at 
-      will only be set to current datetime on creation of table row entry 
-    
-    updated_at 
-      will be set to current datetime on creation of table row entry
-      PGSQL
-        will be updated when the row has been saved
-      MySQL
-        will be updated when the row has been saved and a value of the row changed 
-         
-*******************************************************************************************
-COLUMN OPTIONS
---------------
-  
-following options are awailable for columns
-  
-  option      values      
-  "type"     ->   "DARTABASETYPE"     <---always needed
-  "default"  ->   "yourDefaultValue"  <---optional 
-  "null"     ->   "true" or "false"   <---optional 
-  
-if options are not set then it should use dbAdapter standart settings  
-  
-example
-  
-  "createColumn": {
-        "player": {
-            "player_name": {
-              'type':"VARCHAR",
-              'null':"false",
-              'default':"unnamed Player"
-            }
-        }
-    }
-
-*******************************************************************************************
-
-UP AND DOWN
------------
-
-Additionally to the "UP" key you can specify all actions inside the "DOWN" key
-
-    actions inside "UP" are executed during migration
-    actions inside "DOWN" are executed when reverting migrations
-
-since we created a table named "user", 
-we might want to remove it once we want to revert the migration
-
-    !!!ATTENTION be sure your don't need the data inside a table/column 
-    before you remove it!!!
-
-*******************************************************************************************
-ORDER OF EXECUTION
-------------------
-
-Once you have more than one action in the migration file
-
-    eg.
-      adding a column
-      adding a table
-      removing a column
-
-remember that the order of execution inside a migration will be
-
-    createTable
-     ->
-     createColumn
-      ->
-      removeColumn
-       ->
-       createRelation
-        ->
-        removeRelation
-         ->
-         removeTable
-
-but I cant think of a feasible example where that might bring up problems.
-
-*******************************************************************************************
-HOW TO RUN MIGRATIONS
----------------------
+HOW TO EXECUTE MIGRATIONS
+-------------------------
 
 1.Execute dartabase_migration/bin/dbUp.dart
 
 2.Follow instructions in console
     
-        *enter project name
-        *enter goal migration version
+        *enter project name as specified at initialization -> todo
+        *enter goal migration version -> 1
 
-dartabase_migration should have executed the actions specified inside the "UP" key
-for all files INCLUDING the goal migration version.
+dartabase_migration should have executed the actions specified inside the "UP" key.
 
-Additionally it will update
+Additionally it should have updated
 
-    *$yourProjectName/db/schema.json
+    *PreTutorialMixApp/db/schema.json
     with the current database structure as JSON
 
-    *$yourProjectName/db/schemaVersion.json
+    *PreTutorialMixApp/db/schemaVersion.json
     with the name of latest migrated migration file
 
-HOW TO REVERT MIGRATIONS
-------------------------
+ To revert a migration (execute actions in DOWN key) 
+ Execute dartabase_migration/bin/dbDown.dart and follow the instuctions.
 
-1.Execute dartabase_migration/bin/dbDown.dart 
-
-2.Follow instructions in console
-    
-    *enter project name
-    *enter goal migration version 
-
-dartabase_migration should have executed the actions specified inside the "DOWN" key
-for all files EXCLUDING the goal migration version.
-
-Additionally it will update
-
-    *$yourProjectName/db/schema.json
-    with the current database structure as JSON
-
-    *$yourProjectName/db/schemaVersion.json
-    with the name of latest migrated migration file
-
+ additionally to the two columns, dartabase_migration creates for each table "id", "created_at" and "updated_at" columns, that will be filled automatically!
+ 
+ Now that we have the structure, why not lets use it.
+ 
+ //TODO add modelstuff
+ //TODO add client<->server communication code
 
 *******************************************************************************************
-
-DARTABASE DATA TYPES
---------------------
-dartabase_migration types are Specified in capitals.
-
-on the left hand you see the dartabase_migration data type name
-on the right the data type your database will use
-
-
-
-
-*******************************************************************************************
-Now you can add migration files for simple database manipulation
-
-TODO
-----
-
-  *fix async outputtext
-  *workarround for database problems with reserved words 
-   on creation or when switching DBAdapter from PG to MY.
-        eg. table name 'user' will break in MySQL
-        fix -> add '_' as prefix to all column and table names
-    *test on other systems
-    *adding rename action
-    *adding option to specify variable length
-        currently VARCHAR fix at 255
-    *test functionality of all data types
-    *improvements, adapt more functionality from db connectors
-    *and much more
-
-Please let me know about bugs you find and or improvements/features you would like to see in future.
-
-ENJOY & BE NICE ;)
 
 **Structure
   
