@@ -50,20 +50,24 @@ Migration is a tool to build version controlled database table and column struct
 </p>
 Before we can use its features, we have to initiate migration once for each project we want to use it with.
 
- 1. Execute "dartabase_migration/bin/dbInit.dart"
-    
+ 1. Execute "dartabase_migration/bin/dbInit.dart" 
+
   this process will establish a connection between dartabase_migration and your project. 
 
- 2. Follow the instructions see from the dbInit.dart output window
+  Your output should look like this
   
-  1. insert a project name and hit enter (lets use 'todo' without ')
-  2. insert absolute path to your project root folder (on my machine its and for this example I use 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ') 
+  <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB0.png" >
 
-    Your output should look like this
-      <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB.PNG" >
+ 2. insert a project name 
+  
+  <b>write 'todo' without '' and hit ENTER</b>
+
+  <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB1.png" >
+
+ 3. insert absolute path to your project root folder (on my machine its and for this example I use 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ') 
 
  Once you hit enter, dartabase_migration should created the files and folders listed below
- the output dialog should look like this
+ and the output dialog should look like this
   
   <img src="https://raw.githubusercontent.com/HannesRammer/DartabaseTutorials/master/tutorials/img/postInitDB.PNG" >
  
@@ -187,21 +191,42 @@ inside the DOWN action we simply add the reverse action. Later we can decide if 
 HOW TO EXECUTE MIGRATIONS
 -------------------------
 
-1.Execute dartabase_migration/bin/dbUp.dart
+1. Execute dartabase_migration/bin/dbUp.dart
 
-2.Follow instructions in console
+ You should see a list of all projects that you initiated with Dartabase 
+ 
+ The List includes the Project <b>name, </b> <b>path </b> and <b>version </b>
+ 
+ Your output should look like this 
+
+ <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/dbUp.png" >
+ 
+ currently version is empty
+
+2. now enter a project name 
+ 
+  <b>write 'todo' without '' and hit ENTER</b>
+
+  you should see a list of all migration files that you have inside your projects 'db/migration' folder and should look like this
+
+ <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/dbUpProjectName.png" >
     
-        *enter project name as specified at initialization -> todo
-        *enter goal migration version -> 1
+3. now enter your goal migration version 
 
-dartabase_migration should have executed the actions specified inside the "UP" key.
+  <b>write '0' without '' and hit ENTER</b>
+  
+ dbUp.dart should execute the actions specified inside the "UP" key and your output should look like this
+ 
+ <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/dbUpMigrationNumber.png" >
 
-Additionally it should have updated
+ We can see that a table 'item' with columns 'text' and 'done' was created
+ 
+ Additionally it should have updated
 
-    *PreTutorialMixApp/db/schema.json
+ PreTutorialMixApp/db/schema.json
     with the current database structure as JSON
 
-    *PreTutorialMixApp/db/schemaVersion.json
+ PreTutorialMixApp/db/schemaVersion.json
     with the name of latest migrated migration file
 
  To revert a migration (execute actions in DOWN key) 
