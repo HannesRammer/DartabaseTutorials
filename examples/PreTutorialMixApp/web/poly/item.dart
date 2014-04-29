@@ -46,9 +46,7 @@ class Item extends PolymerElement {
           
         }else{
           this.object = toObservable({'text':'${request.responseText}'});
-                    this.apperance = "index";
-                    
-          //window.location.assign(itemsUrl);
+          this.apperance = "index";
         }
       }
     });

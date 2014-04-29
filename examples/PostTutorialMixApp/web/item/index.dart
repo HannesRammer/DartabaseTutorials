@@ -46,18 +46,8 @@ void displayList(responseText) {
   if(params["inlineEdit"] == "true"){
     polyItemHeader.inlineEdit = true;
   }
-  
   content.append(polyItemHeader);
-        
-  items.forEach((item){
-    Element polyItem = new Element.tag('custom-item');
-    polyItem.object = item;
-    polyItem.apperance = "index";
-    if(params["inlineEdit"] == "true"){
-      polyItem = setInlineEditOption(polyItem);
-    }
-    content.append(polyItem);
-  });
+  appendItems(items);      
 }
 
 Element setInlineEditOption(polyItem){
@@ -78,4 +68,15 @@ void appendInlineEmptyItem(){
   content.append(polyItem);
 }
 
+void appendItems(List items){
+  items.forEach((item){
+      Element polyItem = new Element.tag('custom-item');
+      polyItem.object = item;
+      polyItem.apperance = "index";
+      if(params["inlineEdit"] == "true"){
+        polyItem = setInlineEditOption(polyItem);
+      }
+      content.append(polyItem);
+    });
+}
 

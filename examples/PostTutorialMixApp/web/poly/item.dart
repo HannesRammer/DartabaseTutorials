@@ -46,6 +46,7 @@ class Item extends PolymerElement {
           
         }else{
           window.location.assign(itemsUrl);
+          
         }
       }
     });
@@ -67,8 +68,10 @@ class Item extends PolymerElement {
         querySelector("#content").appendText("done $jsonString");
         if(this.inlineEdit){
           this.remove();
+          
         }else{
           window.location.assign(itemsUrl);
+        
         }
         
       }

@@ -4,13 +4,10 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 import '../lib/paths.dart';
-
-
 import 'package:dartabase_model/dartabase_model.dart';
 part 'item.dart';
 
-/* A simple web server that responds to **ALL** GET requests
- * and responds to ALL **POST** requests
+/* A simple web server that responds to **ALL** GET and **POST** requests
  * 
  * Browse to it using http://localhost:8080  
  * 
@@ -22,7 +19,6 @@ final PORT = 8090;
 
 void main() {
   Model.initiate("C:\\Projects\\Dart\\dartabase\\examples\\PostTutorialMixApp");
-
   HttpServer.bind(HOST, PORT).then((server) {
     server.listen((HttpRequest request) {
       switch (request.method) {
@@ -39,7 +35,6 @@ void main() {
       }
     }, 
     onError: printError);
-    
     print("Listening for GET and POST on http://$HOST:$PORT");
   },
   onError: printError);

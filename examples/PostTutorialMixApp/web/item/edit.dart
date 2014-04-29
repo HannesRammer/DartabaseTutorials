@@ -35,9 +35,6 @@ void main() {
 
 /*
  * void displayEditItem(responseText)
- * 
- * transforms the json response into a map,
- * passing it to the created poly object
 */
 void displayEditItem(String responseText) {
   Map item = JSON.decode(responseText);

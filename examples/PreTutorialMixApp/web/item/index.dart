@@ -1,5 +1,6 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html';
+
 import '../../lib/paths.dart';
 import '../../lib/params.dart';
 
@@ -66,5 +67,3 @@ void appendAsyncEmptyItem(){
   polyItem = setAsyncEditOption(polyItem);
   content.append(polyItem);
 }
-
-

@@ -1,7 +1,10 @@
 part of example.server ;
 class Item {
+  
   String text;
   bool done;
+  
+  
   
   String toString() => "Item text=$text:done=$done";
 
@@ -10,6 +13,19 @@ class Item {
     print("implement loadItems");
     res.write("implement loadItems");
     res.close();
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   }
   
   //return item by id
@@ -17,6 +33,14 @@ class Item {
     print("implement loadItem");
     res.write("implement loadItem");
     res.close();
+  
+  
+  
+  
+  
+  
+  
+  
   }
   
   //save item
@@ -28,6 +52,12 @@ class Item {
       res.write("implement saveItem");
       res.close();
     }, onError: printError);
+  
+  
+  
+  
+  
+  
   }
   
   //delete item
@@ -38,7 +68,41 @@ class Item {
       res.write("implement deleteItem");
       res.close();
     }, onError: printError);
-  }
-    
-}
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

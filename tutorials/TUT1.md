@@ -64,7 +64,9 @@ Before we can use its features, we have to initiate migration once for each proj
 
   <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB1.png" >
 
- 3. insert absolute path to your project root folder (on my machine its and for this example I use 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ') 
+ 3. insert absolute path to your project root folder 
+
+ on my machine its and for this example <b>I use 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without '' </b>
 
  Once you hit enter, dartabase_migration should created the files and folders listed below
  and the output dialog should look like this
@@ -232,11 +234,190 @@ HOW TO EXECUTE MIGRATIONS
  To revert a migration (execute actions in DOWN key) 
  Execute dartabase_migration/bin/dbDown.dart and follow the instuctions.
 
- additionally to the two columns, dartabase_migration creates for each table "id", "created_at" and "updated_at" columns, that will be filled automatically!
+ <b>NOTE:</b>
+       
+       additionally to the two columns, dartabase_migration creates for each table an 
+       "id", "created_at" and "updated_at" column, that will be filled automatically!
  
  Now that we have the structure, why not lets use it.
  
- //TODO add modelstuff
+*******************************************************************************************
+HOW TO USE MODELS
+-----------------
+HOW TO SETUP MODELS
+-------------------
+
+After you have sucessfully finished setting up 'Dartabase Migration' 
+
+1. <b>Install <a href="http://pub.dartlang.org/packages/dartabase_model">Dartabase Model</a> the usual pubspec way</b> 
+    
+2. Inside your project, at the beginning of the main method insert
+        
+    Model.initiate("path-to-your-project");
+
+   now it should look kinda like this:
+  
+    -----dataserver.dart--START--
+  
+    library dataServer;
+
+    import 'package:dartabase_model/dartabase_model.dart';
+
+    main(){
+      Model.initiate("C:\\darttestproject\\DartabaseServer");
+      ... your code
+    }
+  
+    -----dataserver.dart--END--
+  
+3. Imagine you have ONLY created one database table named 'account' 
+
+      with the column 'name'
+  
+4. You have to extend all classes that you want to connected to the database
+
+      with 'Model'
+       
+    in this case we create a class Account with id, name and a counter
+       
+    -----account.dart--START--
+      
+    part of dataServer;
+    
+    class Account extends Model{
+      num id;   
+      String name;
+      num counter;
+    }
+    
+    -----account.dart--END--
+
+5. Now add account.dart as part to dataServer so you can access Account
+   (obviously when you have everything in the same file,
+   you dont need 'part' and 'part_of') 
+  
+    -----dataserver.dart--START--
+      
+    library dataServer;
+  
+    import 'package:dartabase_model/dartabase_model.dart';
+    part "account.dart";  
+    
+    main(){
+      Model.initiate("C:\\darttestproject\\DartabaseServer");
+      ... your code
+    }
+  
+    -----dataserver.dart--END--
+ 
+
+*******************************************************************************************
+HOW TO USE
+----------
+
+SIMPLE MODEL FUNCTIONS
+----------------------
+
+**Future save()** 
+    
+    once future completes
+     
+    Returns String "created" or "updated"
+    
+    player.save().then((process){
+      if(process == "created" || process == "updated"){
+        //your code
+      }else{
+      }
+    }); 
+   
+**Future findBy(String column,var value)** 
+    
+    once future completes
+    
+    returns an (player) object if one exists 
+    else 
+    returns null
+   
+    player.findBy("name","tim").then((player){
+      if(player != null){
+        //your code
+      }else{
+      }
+    }); 
+    
+**Future findById(var id)** 
+    
+    once future completes
+    
+    accepted type of id is (String || int || num)
+     
+    returns an (player) object if one exists 
+    else 
+    returns null
+   
+    player.findById("3").then((player){
+      if(player != null){
+        //your code
+      }else{
+      }
+    }); 
+    
+**Future findAllBy(String column, var value)** 
+    
+    once future completes
+    
+    returns a list of (player) objects if one exists 
+    else 
+    returns empty list
+   
+    player.findAllBy("name","tim").then((players){
+      if(!players.isEmpty){
+        //your code
+      }else{
+      }
+    }); 
+ 
+**Future findAll()** 
+    
+    once future completes
+    
+    returns a list of all (player) objects if one exists 
+    else 
+    returns empty list
+   
+    player.findAll().then((players){
+      if(!players.isEmpty){
+        //your code
+      }else{
+      }
+    }); 
+ 
+**Future delete()** 
+    
+    once future completes
+    
+    deletes the object //TODO and all its relations
+    
+    player.delete();
+    
+  
+**Future remove(object)** 
+  
+  once future completes
+  remove relation between the two objects (player and character)
+  ...
+  
+  player.remove(character).then((result){
+    
+  }); 
+      
+
+*******************************************************************************************
+ 
+ 
+ 
+ 
  //TODO add client<->server communication code
 
 *******************************************************************************************
