@@ -29,24 +29,24 @@ class Item extends PolymerElement {
   }
   
   void save(){
-    print("implement save");
+    print("Saving structured data");
     // Setup the request
     var request = new HttpRequest();
     request.onReadyStateChange.listen((_) {
       if (request.readyState == HttpRequest.DONE &&
           (request.status == 200 || request.status == 0)) {
         // data saved OK.
-        print(" Data saved successfully");
+        print("implement save");
         // update the UI
-        
+        var jsonString = request.responseText;
         //querySelector("#content").appendText(jsonString);
         if(inlineEdit){
-          this.object = toObservable({'text':'${request.responseText}'});
+          this.object = toObservable(JSON.decode(jsonString));
           this.apperance = "index";
           
         }else{
-          this.object = toObservable({'text':'${request.responseText}'});
-          this.apperance = "index";
+          window.location.assign(itemsUrl);
+          
         }
       }
     });
@@ -65,13 +65,13 @@ class Item extends PolymerElement {
         print("Item deleted successfully");
         // update the UI
         var jsonString = request.responseText;
-        
+        querySelector("#content").appendText("done $jsonString");
         if(this.inlineEdit){
           this.remove();
-          querySelector("#content").appendText(jsonString);
+          
         }else{
-          this.remove();
-          querySelector("#content").appendText(jsonString);
+          window.location.assign(itemsUrl);
+        
         }
         
       }

@@ -1,6 +1,6 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html';
-
+import 'dart:convert' show JSON;
 import '../../lib/paths.dart';
 import '../../lib/params.dart';
 
@@ -40,14 +40,14 @@ void main() {
  * passing it to the created poly object
 */
 void displayList(responseText) {
-  
+  List items = JSON.decode(responseText);
   Element polyItemHeader = new Element.tag('custom-item');
   polyItemHeader.apperance = "header";
   if(params["inlineEdit"] == "true"){
     polyItemHeader.inlineEdit = true;
   }
   content.append(polyItemHeader);
-  content.appendText(responseText);
+  appendItems(items);
 }
 
 Element setAsyncEditOption(polyItem){
@@ -66,4 +66,16 @@ void appendAsyncEmptyItem(){
   polyItem.apperance = "create";
   polyItem = setAsyncEditOption(polyItem);
   content.append(polyItem);
+}
+
+void appendItems(List items){
+  items.forEach((item){
+      Element polyItem = new Element.tag('custom-item');
+      polyItem.object = item;
+      polyItem.apperance = "index";
+      if(params["inlineEdit"] == "true"){
+        polyItem = setAsyncEditOption(polyItem);
+      }
+      content.append(polyItem);
+    });
 }

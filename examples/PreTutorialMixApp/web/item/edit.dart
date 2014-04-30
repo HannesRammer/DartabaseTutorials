@@ -37,8 +37,9 @@ void main() {
  * void displayEditItem(responseText)
 */
 void displayEditItem(String responseText) {
+  Map item = JSON.decode(responseText);
   Element polyItem = new Element.tag('custom-item');
-  polyItem.object = toObservable({'text':'${responseText}'});
+  polyItem.object = toObservable(item);
   polyItem.apperance = "edit";
   content.append(polyItem);
 }

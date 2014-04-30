@@ -22,7 +22,7 @@ void main() {
     querySelector("#home").onClick.listen((e) => window.location.assign(homeUrl));
     querySelector("#create").onClick.listen((e){ 
       if(params["inlineEdit"]=="true"){
-        appendInlineEmptyItem();
+        appendAsyncEmptyItem();
       }else{
         window.location.assign(itemCreateUrl);
       }
@@ -47,10 +47,10 @@ void displayList(responseText) {
     polyItemHeader.inlineEdit = true;
   }
   content.append(polyItemHeader);
-  appendItems(items);      
+  appendItems(items);
 }
 
-Element setInlineEditOption(polyItem){
+Element setAsyncEditOption(polyItem){
   polyItem.inlineEdit = true;
   polyItem.onClick.listen((event){ 
     if(polyItem.apperance == "index"){
@@ -61,10 +61,10 @@ Element setInlineEditOption(polyItem){
   return polyItem;
 }
 
-void appendInlineEmptyItem(){
+void appendAsyncEmptyItem(){
   Element polyItem = new Element.tag('custom-item');
   polyItem.apperance = "create";
-  polyItem = setInlineEditOption(polyItem);
+  polyItem = setAsyncEditOption(polyItem);
   content.append(polyItem);
 }
 
@@ -74,9 +74,8 @@ void appendItems(List items){
       polyItem.object = item;
       polyItem.apperance = "index";
       if(params["inlineEdit"] == "true"){
-        polyItem = setInlineEditOption(polyItem);
+        polyItem = setAsyncEditOption(polyItem);
       }
       content.append(polyItem);
     });
 }
-

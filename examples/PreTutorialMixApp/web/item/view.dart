@@ -1,6 +1,6 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html';
-
+import 'dart:convert' show JSON;
 import '../../lib/paths.dart';
 import '../../lib/params.dart';
 
@@ -37,9 +37,9 @@ void main() {
  * void displayItem(responseText)
 */
 void displayItem(String responseText) {
-  
+  Map item = JSON.decode(responseText);
   Element polyItem = new Element.tag('custom-item');
-  polyItem.object = toObservable({'text':'${responseText}'});
+  polyItem.object = toObservable(item);
   polyItem.apperance = "view";
   polyItem.pagination = true;
   content.append(polyItem);
