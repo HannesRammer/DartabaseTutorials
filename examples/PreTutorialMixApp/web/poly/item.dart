@@ -36,7 +36,7 @@ class Item extends PolymerElement {
       if (request.readyState == HttpRequest.DONE &&
           (request.status == 200 || request.status == 0)) {
         // data saved OK.
-        print("implement save");
+        print(" Data saved successfully");
         // update the UI
         var jsonString = request.responseText;
         //querySelector("#content").appendText(jsonString);
