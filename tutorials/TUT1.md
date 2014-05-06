@@ -2,55 +2,58 @@
 ## Tutorial1: database connected dart application
 -------------------------------------------------
  
-<dl>
-  <dd>
 This tutorial will show how to connect your dart appplication, server and client side, to a PostgreSQL or MySQL database.
-<br/>
+
 using <a href="http://pub.dartlang.org/packages/dartabase_migration">Dartabase Migration</a> and <a href="http://pub.dartlang.org/packages/dartabase_model">Dartabase Model</a>   
-  </dd>
-</dl>
 
-###Prerequisits
-
-<dl>
-  <dd>
+*************************************************
+##Prerequisits
+*************************************************
 Though not needed, it might be usefull to bring some understanding of polymer elements and server client communication into this tutorial.
-</br>
+
 If you want to know more about:
-</p>
+
 server client communication I can recommend you <a href="https://www.dartlang.org/articles/json-web-service/">JSON WEB SERVICES</a> by Chris Buckett
-</p>
+
 for more information on Polymer please read 
 <a href="https://www.dartlang.org/polymer-dart/">POLYMER DART</a>
-</p>
+
 and for nice Polymer examples check out 
 <a href="https://github.com/sethladd/dart-polymer-dart-examples">POLYMER DART EXAMPLES</a> by Seth Ladd
-  </dd>
-</dl>
 
-###Getting Started
+*************************************************
+##Getting Started
+*************************************************
+1. **Download 
+<a href="https://github.com/HannesRammer/DartabaseTutorials">Dartabase Tutorials</a> from git** and open it's root folder in the Dart Editor via **Open Existing Folder**
 
-<dl>
-  <dd>
-1. Download 
-<a href="https://github.com/HannesRammer/DartabaseTutorials">Dartabase Tutorials</a> from git and open it's root folder in the Dart Editor via *Open Existing Folder*
-</p>
-2. Download latest stand alone version of 
-<a href="http://pub.dartlang.org/packages/dartabase_migration#versions">Dartabase Migration</a> from pub, extract the zip somewhere to your drive and open the root (lets call it dartabase_migration) folder of the extracted content via "Open Existing Folder"
-</p>
-3. Run 'Pub Get' on dartabase_migration/pubspec.yaml
-  </dd>
-</dl>
+ In the example is a simple todo list webapp using polymer
 
-###Migration Set Up
+ The **server** is located inside the **'/bin folder'** and consists of 
+      
+       -a simple server 
+       -an Item class 
+  
+ The **client** is inside the **'/web folder'** and consists of 
 
-<dl>
-  <dd>
+       -a start page index.html inside /web 
+       -a Item polymer element inside /web/poly // Polymer version >=0.9.5 <0.10.0
+       -Item views for 'index', 'view', 'create', and 'edit' inside /web/Item  
+
+2. **Download latest stand alone version of 
+<a href="http://pub.dartlang.org/packages/dartabase_migration#versions">Dartabase Migration</a>** from pub, extract the zip somewhere to your drive and open the root folder (lets call it dartabase_migration) of the extracted content via **'Open Existing Folder'**
+
+3. **Run 'Pub Get'** on dartabase_migration/pubspec.yaml
+
+*************************************************
+#<a href="http://pub.dartlang.org/packages/dartabase_migration">Dartabase Migration</a> ![logo](https://raw.githubusercontent.com/HannesRammer/Dartabase/master/dartabase_migration/Database-Migration-Logo-150.png) 
+##Set Up
+*************************************************
 Migration is a tool to build version controlled database table and column structures for your MySQL or PostgreSQL database using json files. 
-</p>
+
 Before we can use its features, we have to initiate migration once for each project we want to use it with.
 
- 1. Execute "dartabase_migration/bin/dbInit.dart" 
+ 1. **Execute "dartabase_migration/bin/dbInit.dart" **
 
   this process will establish a connection between dartabase_migration and your project. 
 
@@ -60,42 +63,42 @@ Before we can use its features, we have to initiate migration once for each proj
 
  2. insert a project name 
   
-  <b>write 'todo' without '' and hit ENTER</b>
+  **write 'todo' without '' and hit ENTER**
 
   <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB1.png" >
 
  3. insert absolute path to your project root folder 
 
- on my machine its and for this example <b>I use 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without '' </b>
+ on my machine its and for this example **I use 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without '' **
 
  Once you hit enter, dartabase_migration should created the files and folders listed below
  and the output dialog should look like this
   
   <img src="https://raw.githubusercontent.com/HannesRammer/DartabaseTutorials/master/tutorials/img/postInitDB.PNG" >
  
- <b>dartabase_migration/bin/projectsMapping.json</b>         
+ **dartabase_migration/bin/projectsMapping.json**         
   - maps project names to absolute project paths for interaction between tool and programm <br/><br/>
 
- <b>PreTutorialMixApp/db/</b>
+ **PreTutorialMixApp/db/**
   - folder used by dartabase tools <br/><br/>
  
- <b>PreTutorialMixApp/db/config.json</b>          
+ **PreTutorialMixApp/db/config.json**          
   - the config file is used to set IP/PORT/DBType for DB connection <br/><br/>
       
- <b>PreTutorialMixApp/db/schema.json</b>
+ **PreTutorialMixApp/db/schema.json**
   - schema is the current migrated version of the database structure as JSON used by dartabase tools <br/><br/>
       
- <b>PreTutorialMixApp/db/schemaVersion.json</b>
+ **PreTutorialMixApp/db/schemaVersion.json**
   - safes name of latest migrated version file <br/><br/>
   
- <b>PreTutorialMixApp/db/migrations</b>
+ **PreTutorialMixApp/db/migrations**
   - you have to keep the migration files inside this folder! <br/><br/>
 
- 3. Open the <b>PreTutorialMixApp/db/config.json</b> file and adapt the file with your existing empty database config data
+ 3. Open the **PreTutorialMixApp/db/config.json** file and adapt the file with your existing empty database config data
 
-  In this tutorial we use a PostgeSQL database <b>called</b> 'todoList' 
+  In this tutorial we use a PostgeSQL database **called** 'todoList' 
   <br/>
-  with <b>user</b> 'postgres', <b>password</b> '1234' <b>running on</b> 'localhost:5432'
+  with **user** 'postgres', **password** '1234' **running on** 'localhost:5432'
   <br/><br/>
   the config file should look like this now
   <pre>
@@ -109,19 +112,21 @@ Before we can use its features, we have to initiate migration once for each proj
       "port": "5432"
     }
   </pre>
-    <b>if you prefer to use MySQL use "MySQL" as the adapter instead</b>
+    **if you prefer to use MySQL use "MySQL" as the adapter instead**
 
    We are ready to create our first database migration! yeah
 <br/>
 
-###HOW TO CREATE MIGRATIONS
+*************************************************
+##HOW TO CREATE MIGRATIONS
+*************************************************
  To create a database structure, we can now create simple mirgation files!
 <br/>
- 1. Create a json file "timestamp_action.json" inside <b>"PreTutorialMixApp/db/migrations" </b>
+ 1. Create a json file "timestamp_action.json" inside **"PreTutorialMixApp/db/migrations" **
   <br/>
-  timestamp format is <b>YYYYMMDDHHMMSS </b>
+  timestamp format is **YYYYMMDDHHMMSS **
 
-  eg. <b>"PreTutorialMixApp/db/migrations/20130623043400_create_item.json"</b>
+  eg. **"PreTutorialMixApp/db/migrations/20130623043400_create_item.json"**
  
  2. inside your migration file you have to follow a fixed structure!
 
@@ -161,7 +166,7 @@ Before we can use its features, we have to initiate migration once for each proj
  **removeTable**
  
           "removeTable": ["existing_table_name_one"] (lower_case)
- For the todoList we want to create a list item with a text that stored the task and a done field, for once the task is done.
+ For our todoList example we want to create a list item with a text that stored the task and a done field, for once the task is done.
  
  the migration file should look like this
 
@@ -187,17 +192,16 @@ we have a createTable action that creates a table named "item" with two columns,
 
 inside the DOWN action we simply add the reverse action. Later we can decide if we want to migrate UP or DOWN making it possible to revert database changes
  
- <b>removing columns or tables from the database will obviously delete the data! so be carefull</b>
+ **removing columns or tables from the database will obviously delete the data! so be carefull**
 
-*******************************************************************************************
-HOW TO EXECUTE MIGRATIONS
--------------------------
-
+*************************************************
+##HOW TO EXECUTE MIGRATIONS
+*************************************************
 1. Execute dartabase_migration/bin/dbUp.dart
 
  You should see a list of all projects that you initiated with Dartabase 
  
- The List includes the Project <b>name, </b> <b>path </b> and <b>version </b>
+ The List includes the Project **name, ** **path ** and **version **
  
  Your output should look like this 
 
@@ -207,7 +211,7 @@ HOW TO EXECUTE MIGRATIONS
 
 2. now enter a project name 
  
-  <b>write 'todo' without '' and hit ENTER</b>
+  **write 'todo' without '' and hit ENTER**
 
   you should see a list of all migration files that you have inside your projects 'db/migration' folder and should look like this
 
@@ -215,7 +219,7 @@ HOW TO EXECUTE MIGRATIONS
     
 3. now enter your goal migration version 
 
-  <b>write '0' without '' and hit ENTER</b>
+  **write '0' without '' and hit ENTER**
   
  dbUp.dart should execute the actions specified inside the "UP" key and your output should look like this
  
@@ -234,205 +238,217 @@ HOW TO EXECUTE MIGRATIONS
  To revert a migration (execute actions in DOWN key) 
  Execute dartabase_migration/bin/dbDown.dart and follow the instuctions.
 
- <b>NOTE:</b>
+ **NOTE:**
        
        additionally to the two columns, dartabase_migration creates for each table an 
        "id", "created_at" and "updated_at" column, that will be filled automatically!
  
  Now that we have the structure, why not lets use it.
  
-*******************************************************************************************
-HOW TO USE MODELS
------------------
-HOW TO SETUP MODELS
--------------------
+*************************************************
+#<a href="http://pub.dartlang.org/packages/dartabase_model">Dartabase Model</a> 
+##Set Up 
+*************************************************
 
 After you have sucessfully finished setting up 'Dartabase Migration' 
 
-1. <b>Install <a href="http://pub.dartlang.org/packages/dartabase_model">Dartabase Model</a> the usual pubspec way</b> 
+1. **Install <a href="http://pub.dartlang.org/packages/dartabase_model">Dartabase Model</a> inside your project the usual pubspec way** 
     
-2. Inside your project, at the beginning of the main method insert
-        
-    Model.initiate("path-to-your-project");
+2. **Inside 'bin/simpleServer.dart', insert 'Model.initiate("path-to-your-project");'**
 
-   now it should look kinda like this:
+ at the beginning of the main method like below:
   
-    -----dataserver.dart--START--
+    -----simpleServer.dart--START--
   
-    library dataServer;
+       library dataServer;
+       import 'package:dartabase_model/dartabase_model.dart';
 
-    import 'package:dartabase_model/dartabase_model.dart';
-
-    main(){
-      Model.initiate("C:\\darttestproject\\DartabaseServer");
-      ... your code
-    }
+       main(){
+        Model.initiate("C:\\Projects\\Dart\\dartabase\\examples\\PostTutorialMixApp");
+        ... your code
+       }
   
-    -----dataserver.dart--END--
+    -----simpleServer.dart--END--
   
-3. Imagine you have ONLY created one database table named 'account' 
+Remember that earlier we created a table inside our database named 'item' with the columns 'text' and 'done'. 
 
-      with the column 'name'
+3. **Open the file '/bin/item.dart' and extend the class with 'Model'** to connect the server model class with our database model like below
+
+    -----item.dart--START--
+      
+       part of example.server ;
+
+       class Item extends Model{
+         num id;
+         String text;
+         bool done;
+         DateTime created_at;
+         DateTime updated_at;
   
-4. You have to extend all classes that you want to connected to the database
+         String toString() => "Item id=$id:text=$text:done=$done:created_at:$created_at:updated_at:$updated_at";
+         ...
 
-      with 'Model'
+    -----item.dart--END--
+
+
+*************************************************
+##HOW TO USE MODEL
+*************************************************
+Dartabase Model provides functions to load and save data from and to the database
+to use them we have to replace the dummy code inside the '/bin/item.dart' file
+
+1. **To load all items**, replace
+
+       print("implement loadItems");
+       res.write(JSON.encode([{'text':'implement loadItems'}]));
+       res.close();
+
+ with
+
+       new Item().findAll().then((List items){
+         if(!items.isEmpty){
+           List jsonList=[];
+           items.forEach((Item item){
+             Map itemMap = item.toJson();
+             print(itemMap);
+             jsonList.add(itemMap);
+           });
+           print("found ${items.length} items");
+           res.write(JSON.encode(jsonList));
+         }else{
+           print("no items found");
+           res.write("no items found");
+         }
+         res.close();  
+       });
+    
+  we call **findAll()** on **Item**
+ 
+ **if** at leat one exists in the table it returns a List of them
+ 
+ **else** it returns an empty list 
+
+ so if we find at leat one item, we have to convert the list into a standart JSON format via the toJson() function provided by Model to be able to send it back to the client
+ 
+  else we responde with 'no items found'
+
+2. **To load a single item**, replace
+
+       print("implement loadItem");
+       res.write(JSON.encode({'text':'implement loadItem'}));
+       res.close();
+
+ with
+
+       new Item().findById(int.parse(id)).then((item){
+         if(item != null){
+           Map itemMap = item.toJson();
+           print("found item $itemMap");
+           res.write(JSON.encode(itemMap));
+         }else{
+           print("no item found with id $id");
+           res.write("no item found with id $id");
+         }
+         res.close();  
+       });
+  
+ here we call **findById()** on **Item**
+ 
+ **if** one exists in the table it returns an Item
+ 
+ **else** it returns null 
+
+ if we find an item, we have to convert it into again into a standart JSON format via the toJson() function
+ else we responde with 'no item found with id'
+
+3. **To save an item**, replace
+
+       print("implement saveItem");
+       res.write(JSON.encode({'text':'implement saveItem'}));
+       res.close();
+
+ with
+
+       if(postDataMap['id'] == null){
+         print("creating item with data $postDataMap");
+         fill(new Item(),postDataMap,res);
+       }else{
+         new Item().findById(postDataMap['id']).then((item){
+           print("updating item {$item.id} with data $postDataMap");
+           fill(item,postDataMap,res);
+         });
+       }
        
-    in this case we create a class Account with id, name and a counter
+ and add this to the end of the class
+ 
+       static fill(Item item,Map dataMap, HttpResponse res){
+         item.done = dataMap['done'];
+         item.text = dataMap['text'];
+         item.save().then((process){
+           if(process == "created" || process == "updated"){
+             new Item().findById(item.id).then((Item reloadedItem){
+               print("$process item $reloadedItem");
+               print("$process item ${reloadedItem.toJson()}");
+               res.write(JSON.encode(reloadedItem.toJson()));
+               res.close();
+             });
+           }else{
+             print("object not saved during 'process': $process");
+             res.write("object not saved during 'process': $process");
+             res.close();
+           }
+         });
+       }
+ 
+ here we call **save()** on **Item**
+ 
+ **if** save is successful we reload the item from the database (or use the existing item) to send it to the client
+ 
+ **else** we return 'object not saved' 
+
+4. **Last point! To delete an item**, replace
+
+       print("implement deleteItem");
+       res.write(JSON.encode({'text':'implement deleteItem'}));
+       res.close();
+
+ with
+
+       Map postDataMap = JSON.decode(new String.fromCharCodes(buffer));
+       if(postDataMap['id'] == null){
+         print("no item id provided");
+         res.write("no item id provided");
+       }else{
+         var id = postDataMap['id'];
+         new Item().findById(id).then((item){
+           if(item != null){
+             print("found item with id $id for deletion");
+             item.delete().then((result){
+               print("$result");
+               res.write("$result");
+             });
+           }else{
+             print("no item with id $id found for deletion");
+             res.write("no item with id $id found for deletion");
+           }
+           res.close();  
+         });
+       }
        
-    -----account.dart--START--
-      
-    part of dataServer;
-    
-    class Account extends Model{
-      num id;   
-      String name;
-      num counter;
-    }
-    
-    -----account.dart--END--
-
-5. Now add account.dart as part to dataServer so you can access Account
-   (obviously when you have everything in the same file,
-   you dont need 'part' and 'part_of') 
-  
-    -----dataserver.dart--START--
-      
-    library dataServer;
-  
-    import 'package:dartabase_model/dartabase_model.dart';
-    part "account.dart";  
-    
-    main(){
-      Model.initiate("C:\\darttestproject\\DartabaseServer");
-      ... your code
-    }
-  
-    -----dataserver.dart--END--
+ **if** we find an item via an Id we call delete() on it the item should be deleted from the database
  
-
-*******************************************************************************************
-HOW TO USE
-----------
-
-SIMPLE MODEL FUNCTIONS
-----------------------
-
-**Future save()** 
-    
-    once future completes
-     
-    Returns String "created" or "updated"
-    
-    player.save().then((process){
-      if(process == "created" || process == "updated"){
-        //your code
-      }else{
-      }
-    }); 
-   
-**Future findBy(String column,var value)** 
-    
-    once future completes
-    
-    returns an (player) object if one exists 
-    else 
-    returns null
-   
-    player.findBy("name","tim").then((player){
-      if(player != null){
-        //your code
-      }else{
-      }
-    }); 
-    
-**Future findById(var id)** 
-    
-    once future completes
-    
-    accepted type of id is (String || int || num)
-     
-    returns an (player) object if one exists 
-    else 
-    returns null
-   
-    player.findById("3").then((player){
-      if(player != null){
-        //your code
-      }else{
-      }
-    }); 
-    
-**Future findAllBy(String column, var value)** 
-    
-    once future completes
-    
-    returns a list of (player) objects if one exists 
-    else 
-    returns empty list
-   
-    player.findAllBy("name","tim").then((players){
-      if(!players.isEmpty){
-        //your code
-      }else{
-      }
-    }); 
+ now your /bin/item.dart file should look like postTutorialmixApp/bin/item.dart
+************************************************* 
+#You are done, congratulations!
+*************************************************
+ **Simply run the 'bin/simpleServer.dart' server **
  
-**Future findAll()** 
-    
-    once future completes
-    
-    returns a list of all (player) objects if one exists 
-    else 
-    returns empty list
-   
-    player.findAll().then((players){
-      if(!players.isEmpty){
-        //your code
-      }else{
-      }
-    }); 
+ **the 'web/index.html' client **
  
-**Future delete()** 
-    
-    once future completes
-    
-    deletes the object //TODO and all its relations
-    
-    player.delete();
-    
-  
-**Future remove(object)** 
-  
-  once future completes
-  remove relation between the two objects (player and character)
-  ...
-  
-  player.remove(character).then((result){
-    
-  }); 
-      
+ **and make sure your database server is running!**
+************************************************* 
+##ENJOY! 
+************************************************* 
+ **I am Happy about feedback and input thank you! :)**
 
-*******************************************************************************************
- 
- 
- 
- 
- //TODO add client<->server communication code
 
-*******************************************************************************************
-
-**Structure
-  
-  In generel the example is a simple todo list webapp using polymer
-  
-  The server is located inside the /bin folder and consists of 
-
-    -a simple server 
-    -an Item class 
-  
-  The client is inside the /web folder and consists of 
-
-    -a start page index.html inside /web 
-    -a Item polymer element inside /web/poly 
-    -Item views 'index', 'view', 'create', and 'edit' inside /web/Item  
