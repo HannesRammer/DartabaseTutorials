@@ -11,12 +11,12 @@ Though not needed, it might be usefull to bring some understanding of polymer el
 
 If you want to know more about:
 
-server/client communication I can recommend you <a href="https://www.dartlang.org/articles/json-web-service/">JSON WEB SERVICES</a> by Chris Buckett
+server/client communication, I can recommend you <a href="https://www.dartlang.org/articles/json-web-service/">JSON WEB SERVICES</a> by Chris Buckett
 
-for more information on Polymer please read 
+for more information on Polymer, please read 
 <a href="https://www.dartlang.org/polymer-dart/">POLYMER DART</a>
 
-and for nice Polymer examples check out 
+and for nice Polymer examples, check out 
 <a href="https://github.com/sethladd/dart-polymer-dart-examples">POLYMER DART EXAMPLES</a> by Seth Ladd
 
 *************************************************
