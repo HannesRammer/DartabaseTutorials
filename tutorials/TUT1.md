@@ -51,11 +51,11 @@ Migration is a tool to build version controlled database table and column struct
 
 Before we can use its features, we have to initiate migration once for each project we want to use it with.
 
- 1. **Execute 'dartabase_migration/bin/dbInit.dart'**
+ 1. **Execute 'dartabase_migration/bin/dbInit.dart'**.
 
   This process will establish a connection between dartabase_migration and your project. 
 
-  Your output should look like this
+  Your output should look like this:
   
   <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB0.png" >
 
@@ -71,7 +71,7 @@ Before we can use its features, we have to initiate migration once for each proj
 
  Once you hit enter, dartabase_migration should create the files and folders listed below
  
- and the output dialog should look like this
+ and the output dialog should look like this:
   
   <img src="https://raw.githubusercontent.com/HannesRammer/DartabaseTutorials/master/tutorials/img/postInitDB.PNG" >
  
@@ -97,9 +97,9 @@ Before we can use its features, we have to initiate migration once for each proj
 
   In this tutorial we use a PostgeSQL database **called** 'todoList' 
   <br/>
-  with **user** 'postgres', **password** '1234' **running on** 'localhost:5432'
+  with **user** 'postgres', **password** '1234' **running on** 'localhost:5432'.
   <br/><br/>
-  the config file should look like this now
+  The config file should look like this now:
   <pre>
     --------config.json---------
     {
