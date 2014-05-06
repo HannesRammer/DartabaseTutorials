@@ -262,13 +262,13 @@ After you have sucessfully finished setting up 'Dartabase Migration'
   
     -----simpleServer.dart--START--
   
-       library dataServer;
-       import 'package:dartabase_model/dartabase_model.dart';
+        library dataServer;
+        import 'package:dartabase_model/dartabase_model.dart';
 
-       main(){
-        Model.initiate("C:\\Projects\\Dart\\dartabase\\examples\\PostTutorialMixApp");
-        ... your code
-       }
+        main(){
+         Model.initiate("C:\\Projects\\Dart\\dartabase\\examples\\PostTutorialMixApp");
+         ... your code
+        }
   
     -----simpleServer.dart--END--
   
@@ -278,17 +278,17 @@ Since we created a table inside our database named 'item', we have make small ch
 
     -----item.dart--START--
       
-       part of example.server;
+        part of example.server;
 
-       class Item extends Model{
-         num id;
-         String text;
-         bool done;
-         DateTime created_at;
-         DateTime updated_at;
+        class Item extends Model{
+          num id;
+          String text;
+          bool done;
+          DateTime created_at;
+          DateTime updated_at;
   
-         String toString() => "Item id=$id:text=$text:done=$done:created_at:$created_at:updated_at:$updated_at";
-         ...
+          String toString() => "Item id=$id:text=$text:done=$done:created_at:$created_at:updated_at:$updated_at";
+          ...
 
     -----item.dart--END--
 
@@ -296,158 +296,161 @@ Since we created a table inside our database named 'item', we have make small ch
 *************************************************
 ##HOW TO USE MODEL
 *************************************************
-Dartabase Model provides functions to load and save data from and to the database
-to use them we have to replace the dummy code inside the '/bin/item.dart' file
+Dartabase Model provides functions to load and save data from and to the database.
+To use them we have to replace the dummy code inside the '/bin/item.dart' file.
 
 1. **To load all items**, replace
 
-       print("implement loadItems");
-       res.write(JSON.encode([{'text':'implement loadItems'}]));
-       res.close();
+        print("implement loadItems");
+        res.write(JSON.encode([{'text':'implement loadItems'}]));
+        res.close();
 
  with
 
-       new Item().findAll().then((List items){
-         if(!items.isEmpty){
-           List jsonList=[];
-           items.forEach((Item item){
-             Map itemMap = item.toJson();
-             print(itemMap);
-             jsonList.add(itemMap);
-           });
-           print("found ${items.length} items");
-           res.write(JSON.encode(jsonList));
-         }else{
-           print("no items found");
-           res.write("no items found");
-         }
-         res.close();  
-       });
+        new Item().findAll().then((List items){
+          if(!items.isEmpty){
+            List jsonList=[];
+            items.forEach((Item item){
+              Map itemMap = item.toJson();
+              print(itemMap);
+              jsonList.add(itemMap);
+            });
+            print("found ${items.length} items");
+            res.write(JSON.encode(jsonList));
+          }else{
+            print("no items found");
+            res.write("no items found");
+          }
+          res.close();  
+        });
     
-  we call **findAll()** on **Item**
+  We call **findAll()** on **Item**
  
- **if** at leat one exists in the table it returns a List of them
+ **If** at leat one exists in the table it returns a List of them
  
- **else** it returns an empty list 
+ **Else** it returns an empty list 
 
- so if we find at leat one item, we have to convert the list into a standart JSON format via the toJson() function provided by Model to be able to send it back to the client
+ So if we find at least one item, we have to convert the list into a standart JSON format via the toJson() function provided by Model to be able to send the JSON string back to the client.
  
-  else we responde with 'no items found'
+ Else we responde with 'no items found'.
 
 2. **To load a single item**, replace
 
-       print("implement loadItem");
-       res.write(JSON.encode({'text':'implement loadItem'}));
-       res.close();
+        print("implement loadItem");
+        res.write(JSON.encode({'text':'implement loadItem'}));
+        res.close();
 
  with
 
-       new Item().findById(int.parse(id)).then((item){
-         if(item != null){
-           Map itemMap = item.toJson();
-           print("found item $itemMap");
-           res.write(JSON.encode(itemMap));
-         }else{
-           print("no item found with id $id");
-           res.write("no item found with id $id");
-         }
-         res.close();  
-       });
+        new Item().findById(int.parse(id)).then((item){
+          if(item != null){
+            Map itemMap = item.toJson();
+            print("found item $itemMap");
+            res.write(JSON.encode(itemMap));
+          }else{
+            print("no item found with id $id");
+            res.write("no item found with id $id");
+          }
+          res.close();  
+        });
   
- here we call **findById()** on **Item**
+ Here we call **findById()** on **Item**
  
- **if** one exists in the table it returns an Item
+ **If** one exists in the table it returns an Item.
  
- **else** it returns null 
+ **Else** it returns null. 
 
- if we find an item, we have to convert it into again into a standart JSON format via the toJson() function
- else we responde with 'no item found with id'
+ If we find an item, we have to convert it into again and send it to the client.
+ 
+ Else we responde with 'no item found with id'.
 
 3. **To save an item**, replace
 
-       print("implement saveItem");
-       res.write(JSON.encode({'text':'implement saveItem'}));
-       res.close();
+        print("implement saveItem");
+        res.write(JSON.encode({'text':'implement saveItem'}));
+        res.close();
 
  with
 
-       if(postDataMap['id'] == null){
-         print("creating item with data $postDataMap");
-         fill(new Item(),postDataMap,res);
-       }else{
-         new Item().findById(postDataMap['id']).then((item){
-           print("updating item {$item.id} with data $postDataMap");
-           fill(item,postDataMap,res);
-         });
-       }
+        if(postDataMap['id'] == null){
+          print("creating item with data $postDataMap");
+          fill(new Item(),postDataMap,res);
+        }else{
+          new Item().findById(postDataMap['id']).then((item){
+            print("updating item {$item.id} with data $postDataMap");
+            fill(item,postDataMap,res);
+          });
+        }
        
- and add this to the end of the class
+ and add this to the end of the class.
  
-       static fill(Item item,Map dataMap, HttpResponse res){
-         item.done = dataMap['done'];
-         item.text = dataMap['text'];
-         item.save().then((process){
-           if(process == "created" || process == "updated"){
-             new Item().findById(item.id).then((Item reloadedItem){
-               print("$process item $reloadedItem");
-               print("$process item ${reloadedItem.toJson()}");
-               res.write(JSON.encode(reloadedItem.toJson()));
-               res.close();
-             });
-           }else{
-             print("object not saved during 'process': $process");
-             res.write("object not saved during 'process': $process");
-             res.close();
-           }
-         });
-       }
+        static fill(Item item,Map dataMap, HttpResponse res){
+          item.done = dataMap['done'];
+          item.text = dataMap['text'];
+          item.save().then((process){
+            if(process == "created" || process == "updated"){
+              new Item().findById(item.id).then((Item reloadedItem){
+                print("$process item $reloadedItem");
+                print("$process item ${reloadedItem.toJson()}");
+                res.write(JSON.encode(reloadedItem.toJson()));
+                res.close();
+              });
+            }else{
+              print("object not saved during 'process': $process");
+              res.write("object not saved during 'process': $process");
+              res.close();
+            }
+          });
+        }
  
  here we call **save()** on **Item**
  
- **if** save is successful we reload the item from the database (or use the existing item) to send it to the client
+ **If** save is successful, we reload the item via its 'id' to see if the change happened inside the database. 
  
- **else** we return 'object not saved' 
+ **Else** we return 'object not saved'. 
 
 4. **Last point! To delete an item**, replace
 
-       print("implement deleteItem");
-       res.write(JSON.encode({'text':'implement deleteItem'}));
-       res.close();
+        print("implement deleteItem");
+        res.write(JSON.encode({'text':'implement deleteItem'}));
+        res.close();
 
  with
 
-       Map postDataMap = JSON.decode(new String.fromCharCodes(buffer));
-       if(postDataMap['id'] == null){
-         print("no item id provided");
-         res.write("no item id provided");
-       }else{
-         var id = postDataMap['id'];
-         new Item().findById(id).then((item){
-           if(item != null){
-             print("found item with id $id for deletion");
-             item.delete().then((result){
-               print("$result");
-               res.write("$result");
-             });
-           }else{
-             print("no item with id $id found for deletion");
-             res.write("no item with id $id found for deletion");
-           }
-           res.close();  
-         });
-       }
+        Map postDataMap = JSON.decode(new String.fromCharCodes(buffer));
+        if(postDataMap['id'] == null){
+          print("no item id provided");
+          res.write("no item id provided");
+        }else{
+          var id = postDataMap['id'];
+          new Item().findById(id).then((item){
+            if(item != null){
+              print("found item with id $id for deletion");
+              item.delete().then((result){
+                print("$result");
+                res.write("$result");
+              });
+            }else{
+              print("no item with id $id found for deletion");
+              res.write("no item with id $id found for deletion");
+            }
+            res.close();  
+          });
+        }
        
- **if** we find an item via an Id we call delete() on it the item should be deleted from the database
+ **If** we find an item via an id, we call delete() on the item. If successful the item should be deleted.
  
- now your /bin/item.dart file should look like postTutorialmixApp/bin/item.dart
+ Now your PreTutorialmixApp/bin/item.dart file should look like PostTutorialmixApp/bin/item.dart!
 ************************************************* 
 #You are done, congratulations!
 *************************************************
- **Simply run the 'bin/simpleServer.dart' server **
+ **Now simply run 
  
- **the 'web/index.html' client **
+ the 'bin/simpleServer.dart' server
  
- **and make sure your database server is running!**
+ the 'web/index.html' client
+ 
+ and make sure your database server is running!**
 ************************************************* 
 ##ENJOY! 
 ************************************************* 
