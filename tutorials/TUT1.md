@@ -2,18 +2,16 @@
 ## Tutorial1: database connected dart application
 -------------------------------------------------
  
-This tutorial will show how to connect your dart appplication, server and client side, to a PostgreSQL or MySQL database.
-
-using <a href="http://pub.dartlang.org/packages/dartabase_migration">Dartabase Migration</a> and <a href="http://pub.dartlang.org/packages/dartabase_model">Dartabase Model</a>   
+This tutorial will show how to connect your dart application, server and client side, to a PostgreSQL or MySQL database using <a href="http://pub.dartlang.org/packages/dartabase_migration">Dartabase Migration</a> and <a href="http://pub.dartlang.org/packages/dartabase_model">Dartabase Model</a>   
 
 *************************************************
 ##Prerequisits
 *************************************************
-Though not needed, it might be usefull to bring some understanding of polymer elements and server client communication into this tutorial.
+Though not needed, it might be usefull to bring some understanding of polymer elements and server/client communication into this tutorial.
 
 If you want to know more about:
 
-server client communication I can recommend you <a href="https://www.dartlang.org/articles/json-web-service/">JSON WEB SERVICES</a> by Chris Buckett
+server/client communication I can recommend you <a href="https://www.dartlang.org/articles/json-web-service/">JSON WEB SERVICES</a> by Chris Buckett
 
 for more information on Polymer please read 
 <a href="https://www.dartlang.org/polymer-dart/">POLYMER DART</a>
@@ -27,7 +25,7 @@ and for nice Polymer examples check out
 1. **Download 
 <a href="https://github.com/HannesRammer/DartabaseTutorials">Dartabase Tutorials</a> from git** and open it's root folder in the Dart Editor via **Open Existing Folder**
 
- In the example is a simple todo list webapp using polymer
+ The example is a simple todo list webapp using polymer
 
  The **server** is located inside the **'/bin folder'** and consists of 
       
@@ -53,25 +51,26 @@ Migration is a tool to build version controlled database table and column struct
 
 Before we can use its features, we have to initiate migration once for each project we want to use it with.
 
- 1. **Execute "dartabase_migration/bin/dbInit.dart" **
+ 1. **Execute 'dartabase_migration/bin/dbInit.dart'**
 
-  this process will establish a connection between dartabase_migration and your project. 
+  This process will establish a connection between dartabase_migration and your project. 
 
   Your output should look like this
   
   <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB0.png" >
 
- 2. insert a project name 
+ 2. Insert a project name. 
   
-  **write 'todo' without '' and hit ENTER**
+  **Write 'todo' without '' and hit ENTER**
 
   <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/initDB1.png" >
 
- 3. insert absolute path to your project root folder 
+ 3. Insert the absolute path to your project root folder. 
 
- on my machine its and for this example **I use 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without '' **
+ On my machine and for this example **I use 'C:\Projects\Dart\DartabaseTutorials\examples\PreTutorialMixApp' without ''**
 
- Once you hit enter, dartabase_migration should created the files and folders listed below
+ Once you hit enter, dartabase_migration should create the files and folders listed below
+ 
  and the output dialog should look like this
   
   <img src="https://raw.githubusercontent.com/HannesRammer/DartabaseTutorials/master/tutorials/img/postInitDB.PNG" >
@@ -114,24 +113,26 @@ Before we can use its features, we have to initiate migration once for each proj
   </pre>
     **if you prefer to use MySQL use "MySQL" as the adapter instead**
 
-   We are ready to create our first database migration! yeah
+   We are ready to create our first database migration! Yeah!
 <br/>
 
 *************************************************
 ##HOW TO CREATE MIGRATIONS
 *************************************************
- To create a database structure, we can now create simple mirgation files!
+ To create a database structure, we can now create mirgation files!
 <br/>
- 1. Create a json file "timestamp_action.json" inside **"PreTutorialMixApp/db/migrations" **
+ 1. Create a json file 'currentTimestamp_action.json' inside **'PreTutorialMixApp/db/migrations'**
   <br/>
-  timestamp format is **YYYYMMDDHHMMSS **
+  timestamp format is **YYYYMMDDHHMMSS**
 
-  eg. **"PreTutorialMixApp/db/migrations/20130623043400_create_item.json"**
+  eg. **'PreTutorialMixApp/db/migrations/20130623043400_create_item.json'**
  
- 2. inside your migration file you have to follow a fixed structure!
+ 2. Inside your migration file you, have to follow a fixed structure!
 
-  you can execute actions using a JSON object using a key "UP" or "DOWN" key that each take a json object as a value
-  DOWN is manly used to revert actions taken inside the UP
+  You can execute actions using JSON objects that work with an "UP" and "DOWN" key.
+  each key takes each take a json object as a value.
+  
+  DOWN is manly used to revert actions specified inside the UP
 
   Some of the actions you can specify are
 
@@ -158,17 +159,20 @@ Before we can use its features, we have to initiate migration once for each proj
             ...
             }
           }
+          
  **removeColumn**
     
           "removeColumn": {
             "existing_table_name_one": ["existing_column_name_one"]
           }
+          
  **removeTable**
  
           "removeTable": ["existing_table_name_one"] (lower_case)
- For our todoList example we want to create a list item with a text that stored the task and a done field, for once the task is done.
  
- the migration file should look like this
+ For our todoList, we want to create a list item with a text that stores the task and a done field, for once the task is done.
+ 
+ The migration file can look like this
 
     ----------20130623043400_create_item.json--------------
     
@@ -188,11 +192,11 @@ Before we can use its features, we have to initiate migration once for each proj
           }
         }
 
-we have a createTable action that creates a table named "item" with two columns, "text" as a string and "done" as a boolean with default value false
+We have a createTable action that creates a table named "item" with two columns. "text" as a string and "done" as a boolean with default value false.
 
-inside the DOWN action we simply add the reverse action. Later we can decide if we want to migrate UP or DOWN making it possible to revert database changes
+Inside the DOWN action we simply add the reverse action. Later we can decide if we want to migrate UP or DOWN, making it possible to revert database changes.
  
- **removing columns or tables from the database will obviously delete the data! so be carefull**
+**removing columns or tables from the database will obviously delete the data! so be carefull**
 
 *************************************************
 ##HOW TO EXECUTE MIGRATIONS
@@ -201,31 +205,31 @@ inside the DOWN action we simply add the reverse action. Later we can decide if 
 
  You should see a list of all projects that you initiated with Dartabase 
  
- The List includes the Project **name, ** **path ** and **version **
+ The List includes the Project **name**, **path** and **version**
  
  Your output should look like this 
 
  <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/dbUp.png" >
  
- currently version is empty
+ Currently version is empty.
 
-2. now enter a project name 
+2. Now enter a project name. 
  
-  **write 'todo' without '' and hit ENTER**
+ **Write 'todo' without '' and hit ENTER!**
 
-  you should see a list of all migration files that you have inside your projects 'db/migration' folder and should look like this
+ You should see a list of all migration files that you have inside your projects 'db/migration' folder and should look something like this.
 
  <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/dbUpProjectName.png" >
     
-3. now enter your goal migration version 
+3. Now enter your goal migration version. 
 
-  **write '0' without '' and hit ENTER**
+  **Write '0' without '' and hit ENTER!**
   
- dbUp.dart should execute the actions specified inside the "UP" key and your output should look like this
+ The actions we specified inside the "UP" key and your output should look like this.
  
  <img src="https://raw.github.com/HannesRammer/DartabaseTutorials/master/tutorials/img/dbUpMigrationNumber.png" >
 
- We can see that a table 'item' with columns 'text' and 'done' was created
+ We can see that a table 'item' with columns 'text' and 'done' was created.
  
  Additionally it should have updated
 
@@ -240,7 +244,7 @@ inside the DOWN action we simply add the reverse action. Later we can decide if 
 
  **NOTE:**
        
-       additionally to the two columns, dartabase_migration creates for each table an 
+       Additionally to the two columns, dartabase_migration creates for each table an 
        "id", "created_at" and "updated_at" column, that will be filled automatically!
  
  Now that we have the structure, why not lets use it.
@@ -254,9 +258,7 @@ After you have sucessfully finished setting up 'Dartabase Migration'
 
 1. **Install <a href="http://pub.dartlang.org/packages/dartabase_model">Dartabase Model</a> inside your project the usual pubspec way** 
     
-2. **Inside 'bin/simpleServer.dart', insert 'Model.initiate("path-to-your-project");'**
-
- at the beginning of the main method like below:
+2. **Inside 'bin/simpleServer.dart', insert 'Model.initiate("path-to-your-project");'** at the beginning of the main method like below:
   
     -----simpleServer.dart--START--
   
@@ -270,13 +272,13 @@ After you have sucessfully finished setting up 'Dartabase Migration'
   
     -----simpleServer.dart--END--
   
-Remember that earlier we created a table inside our database named 'item' with the columns 'text' and 'done'. 
+Since we created a table inside our database named 'item', we have make small changes to the object server files. 
 
-3. **Open the file '/bin/item.dart' and extend the class with 'Model'** to connect the server model class with our database model like below
+3. **Open the file '/bin/item.dart'** and extend the class with **'Model'** to connect the server model class with our database model like below
 
     -----item.dart--START--
       
-       part of example.server ;
+       part of example.server;
 
        class Item extends Model{
          num id;
