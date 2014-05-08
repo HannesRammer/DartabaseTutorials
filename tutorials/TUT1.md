@@ -38,6 +38,24 @@ and for nice Polymer examples, check out
        -a Item polymer element inside /web/poly // Polymer version >=0.9.5 <0.10.0
        -Item views for 'index', 'view', 'create', and 'edit' inside /web/Item  
 
+ Additional the project uses 2 helper libs inside the **'/lib'** folder. 
+
+    **params.dart**  
+         
+        import the lib inside a client dart file and call 
+
+        params = loadParams(window);  
+        
+        at the beginning of its main() function, this will convert the seatch string into a JSON format
+         
+        =?id=1&name=Hannes  convets to {'id':'1','name':'Hannes'}
+        
+        now you can access the the search params with ease 
+         
+    **paths.dart** 
+        a collection of all server and client urls to keep code clean
+         
+
 2. **Download latest stand alone version of 
 <a href="http://pub.dartlang.org/packages/dartabase_migration#versions">Dartabase Migration</a>** from pub, extract the zip somewhere to your drive and open the root folder (lets call it dartabase_migration) of the extracted content via **'Open Existing Folder'**
 
