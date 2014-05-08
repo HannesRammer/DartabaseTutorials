@@ -53,7 +53,7 @@ class Item extends Model{
         fill(new Item(),postDataMap,res);
       }else{
         new Item().findById(postDataMap['id']).then((item){
-          print("updating item {$item.id} with data $postDataMap");
+          print("updating item ${item.id} with data $postDataMap");
           fill(item,postDataMap,res);
         });
       }

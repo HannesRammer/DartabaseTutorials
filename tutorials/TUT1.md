@@ -377,7 +377,7 @@ To use them we have to replace the dummy code inside the '/bin/item.dart' file.
           fill(new Item(),postDataMap,res);
         }else{
           new Item().findById(postDataMap['id']).then((item){
-            print("updating item {$item.id} with data $postDataMap");
+            print("updating item ${item.id} with data $postDataMap");
             fill(item,postDataMap,res);
           });
         }
