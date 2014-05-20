@@ -1,12 +1,10 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html';
 import '../../lib/paths.dart';
-import '../../lib/params.dart';
+import 'package:params/client.dart';
 
 DivElement content = querySelector("#content");
 
-Map params = {};
-  
 /*
  * void main()
  * 
@@ -15,9 +13,9 @@ Map params = {};
 void main() {
   querySelector("#warning").remove();
   initPolymer().run(() {
+    initParams();
     querySelector("#view_items").onClick.listen((e) => window.location.assign(itemsUrl));
     querySelector("#home").onClick.listen((e) => window.location.assign(homeUrl));
-    params = loadParams(window);
     Element polyItem = new Element.tag('custom-item');
     polyItem.apperance = "create";
     content.append(polyItem);

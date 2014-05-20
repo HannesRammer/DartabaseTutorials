@@ -5,7 +5,9 @@ import 'dart:io';
 import 'dart:convert';
 import '../lib/paths.dart';
 import 'package:dartabase_model/dartabase_model.dart';
+import 'package:params/server.dart';
 part 'item.dart';
+//@dartabaseScaffoldPartial
 
 /* A simple web server that responds to **ALL** GET and **POST** requests
  * 
@@ -18,9 +20,10 @@ final HOST = "127.0.0.1"; // eg: localhost
 final PORT = 8090; 
 
 void main() {
-  Model.initiate("C:\\Projects\\Dart\\dartabase\\examples\\PostTutorialMixApp");
+  Model.initiate("C:\\Projects\\Dart\\DartabaseTutorials\\examples\\PostTutorialMixApp");
   HttpServer.bind(HOST, PORT).then((server) {
     server.listen((HttpRequest request) {
+      initParams(request);
       switch (request.method) {
         case "GET": 
           handleGet(request);
@@ -55,6 +58,7 @@ void handleGet(HttpRequest req) {
     String id= path.split("/$itemLoadUrl/")[1];
     Item.loadItem(res, id);
   }else {
+    //@dartabaseScaffoldGet
     var err = "Could not find path: $path";
     res.write(err);
     res.close();  
@@ -75,6 +79,7 @@ void handlePost(HttpRequest req) {
   } else if(path == "/$itemDeleteUrl"){
     Item.deleteItem(req, res);
   }
+  //@dartabaseScaffoldPost
 }
 
 /**

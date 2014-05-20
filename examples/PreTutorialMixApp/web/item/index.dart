@@ -2,12 +2,10 @@ import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'dart:convert' show JSON;
 import '../../lib/paths.dart';
-import '../../lib/params.dart';
+import 'package:params/client.dart';
 
 DivElement content = querySelector("#content");
 
-Map params = {};
-  
 /*
  * void main()
  * 
@@ -18,7 +16,7 @@ Map params = {};
 void main() {
   querySelector("#warning").remove();
   initPolymer().run(() {
-    params = loadParams(window);
+    initParams();
     querySelector("#home").onClick.listen((e) => window.location.assign(homeUrl));
     querySelector("#create").onClick.listen((e){ 
       if(params["inlineEdit"]=="true"){

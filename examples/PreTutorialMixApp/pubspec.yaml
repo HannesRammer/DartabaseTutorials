@@ -1,10 +1,10 @@
 name: PreTutorialMixApp
 description: A sample command-line application
 dependencies:
-  json_object: ">=1.0.18+2 <2.0.0"
   browser: any
+  json_object: '>=1.0.18+2 <2.0.0'
+  params: 0.0.2
   polymer: '>=0.9.5 <0.10.0'
 transformers:
 - polymer:
     entry_points: web/index.html
-  

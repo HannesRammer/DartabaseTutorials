@@ -38,21 +38,11 @@ and for nice Polymer examples, check out
        -a Item polymer element inside /web/poly // Polymer version >=0.9.5 <0.10.0
        -Item views for 'index', 'view', 'create', and 'edit' inside /web/Item  
 
- Additional the project uses 2 helper libs inside the **'/lib'** folder. 
+ Additional the project uses helpers. 
 
-    **params.dart**  
+    uses the params package. see (here)[http://pub.dartlang.org/packages/params]        
          
-        import the lib inside a client dart file and call 
-
-        params = loadParams(window);  
-        
-        at the beginning of its main() function, this will convert the seatch string into a JSON format
-         
-        =?id=1&name=Hannes  convets to {'id':'1','name':'Hannes'}
-        
-        now you can access the the search params with ease 
-         
-    **paths.dart** 
+    **paths.dart** inside the /lib folder 
         a collection of all server and client urls to keep code clean
          
 

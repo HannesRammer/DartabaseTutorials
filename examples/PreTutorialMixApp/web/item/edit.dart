@@ -2,12 +2,10 @@ import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'dart:convert' show JSON;
 import '../../lib/paths.dart';
-import '../../lib/params.dart';
+import 'package:params/client.dart';
 
 DivElement content = querySelector("#content");
 
-Map params = {};
-  
 /*
  * void main()
  * 
@@ -20,7 +18,7 @@ void main() {
   initPolymer().run(() {
     querySelector("#view_items").onClick.listen((e) => window.location.assign(itemsUrl));
     querySelector("#home").onClick.listen((e) => window.location.assign(homeUrl));
-    params = loadParams(window);
+    initParams();
     if(params['id'] != null){
       String id = params['id'];
       print("requesting item with $id");
