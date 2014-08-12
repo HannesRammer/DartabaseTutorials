@@ -1,6 +1,6 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html';
-import '../../lib/paths.dart';
+import '../paths.dart';
 import 'package:params/client.dart';
 
 DivElement content = querySelector("#content");

@@ -1,7 +1,7 @@
 import 'package:polymer/polymer.dart';
 import 'dart:convert' show JSON;
 import 'dart:html';
-import '../../lib/paths.dart';
+import '../paths.dart';
 
 @CustomTag('custom-item')
 class Item extends PolymerElement {

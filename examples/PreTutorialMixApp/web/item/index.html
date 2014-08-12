@@ -2,9 +2,10 @@
 <html>
   <head>
     <title>Items View</title>
+    <script src="../../packages/web_components/platform.js"></script>
+    <script src="../../packages/web_components/dart_support.js"></script>
+    
     <link rel="import" href="../poly/item.html">
-    <script type="application/dart"> export 'index.dart'; </script>
-    <script src="packages/browser/dart.js"></script>
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
@@ -15,5 +16,8 @@
       <button id="create" title="Create Item">Create Item</button>
     </nav>
     <div id="content"></div>
+    <script type="application/dart" src='index.dart'> </script>
+    <script src="../../packages/browser/dart.js"></script>
+    
   </body>
 </html>

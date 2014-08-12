@@ -2,9 +2,11 @@
 <html>
   <head>
     <title>Item Edit</title>
+    <script src="../../packages/web_components/platform.js"></script>
+    <script src="../../packages/web_components/dart_support.js"></script>
+    
     <link rel="import" href="../poly/item.html">
-    <script type="application/dart"> export 'edit.dart'; </script>
-    <script src="packages/browser/dart.js"></script>
+    
   </head>
   <body>
     <h1>Item Edit</h1>
@@ -14,5 +16,7 @@
       <button id="home" title="HOME">HOME</button>
     </nav>
     <div id="content"></div>
+    <script type="application/dart" src='edit.dart'> </script>
+    <script src="../../packages/browser/dart.js"></script>
   </body>
 </html>

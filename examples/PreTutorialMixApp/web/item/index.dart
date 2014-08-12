@@ -1,7 +1,7 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html';
 import 'dart:convert' show JSON;
-import '../../lib/paths.dart';
+import '../paths.dart';
 import 'package:params/client.dart';
 
 DivElement content = querySelector("#content");
@@ -15,6 +15,7 @@ DivElement content = querySelector("#content");
 */
 void main() {
   querySelector("#warning").remove();
+
   initPolymer().run(() {
     initParams();
     querySelector("#home").onClick.listen((e) => window.location.assign(homeUrl));
