@@ -1,4 +1,6 @@
 *************************************************
+##THIS TUTORIAL NEEDS TO BE UPDATED FOR 1.0.0 
+## Im working on it, till then follow the readmes from the migration and model packages
 ## Tutorial1: database connected dart application
 -------------------------------------------------
  
