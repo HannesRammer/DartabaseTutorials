@@ -1,0 +1,1 @@
+{"adapter":"PGSQL","database":"todolist","username":"postgres","password":"root","host":"localhost","port":"5432"}

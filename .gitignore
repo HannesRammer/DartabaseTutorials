@@ -6,7 +6,7 @@
 
 #Dart
 
-
+.pub
 #DartabaseTutorials
 
 packages/
@@ -14,3 +14,4 @@ pubspec.lock
 .settings/
 
 
+*.packages
